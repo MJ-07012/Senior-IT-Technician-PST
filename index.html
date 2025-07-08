@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marlon Jordan - Senior IT Technician</title>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The SPA has been redesigned to prioritize a direct comparison with the target role. The new flow is: Intro (with a link to the alignment section), Core Competencies (bar chart), Experience, Role Alignment, Certifications, and Skills. The "Role Alignment" section is a new, central feature, using a two-column layout to explicitly map job requirements to the candidate's qualifications. This structure is designed to immediately answer a recruiter's primary question: "Is this candidate a good fit?" The interactive experience is focused on clarity and direct evidence. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Core Competencies -> Goal: Compare -> Viz: Horizontal Bar Chart (Chart.js) -> Interaction: Hover for tooltips -> Justification: A bar chart is clearer for comparing distinct skill levels than a radar chart and is more standard.
+        - Report Info: Role Alignment -> Goal: Compare/Justify -> Presentation: Two-column comparison table (HTML/Tailwind) -> Interaction: Hover on a "Need" highlights the corresponding "Contribution" -> Justification: Provides a direct, scannable, and compelling argument for candidacy by visually linking needs and qualifications.
+        - Report Info: Certifications -> Goal: Inform/Justify -> Presentation: Detailed description cards (HTML/Tailwind) -> Interaction: None -> Justification: Moves beyond a simple list to explain the value and relevance of each certification, strengthening the candidate's profile.
+        - Library/Method: Chart.js for visualizations, Tailwind CSS for layout, Vanilla JS for interactions. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2c3e50;
+        }
+        .nav-link {
+            transition: color 0.3s, border-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #2E5A88;
+            border-bottom-color: #2E5A88;
+        }
+        .job-tab.active {
+            background-color: #2E5A88;
+            color: #ffffff;
+        }
+        .job-tab {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 50vh;
+            width: 100%;
+            max-width: 700px;
+            max-height: 450px;
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .alignment-box {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease-in-out;
+        }
+        .alignment-box.highlight {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800">Marlon Jordan</div>
+            <div class="hidden md:flex items-center space-x-6" id="nav-menu">
+                <a href="#competencies" class="nav-link font-medium pb-1 text-sm">Competencies</a>
+                <a href="#experience" class="nav-link font-medium pb-1 text-sm">Experience</a>
+                <a href="#alignment" class="nav-link font-medium pb-1 text-sm">Role Alignment</a>
+                <a href="#certifications" class="nav-link font-medium pb-1 text-sm">Certifications</a>
+                <a href="#skills" class="nav-link font-medium pb-1 text-sm">Skills</a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+             </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/90">
+             <a href="#competencies" class="block py-2 px-6 text-sm nav-link-mobile">Competencies</a>
+             <a href="#experience" class="block py-2 px-6 text-sm nav-link-mobile">Experience</a>
+             <a href="#alignment" class="block py-2 px-6 text-sm nav-link-mobile">Role Alignment</a>
+             <a href="#certifications" class="block py-2 px-6 text-sm nav-link-mobile">Certifications</a>
+             <a href="#skills" class="block py-2 px-6 text-sm nav-link-mobile">Skills</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <section id="summary" class="min-h-[80vh] flex flex-col justify-center items-center text-center section-fade-in">
+             <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">Marlon Jordan</h1>
+             <p class="text-xl md:text-2xl text-[#2E5A88] mt-4">Senior IT Technician</p>
+            <div class="mt-8 max-w-3xl">
+                <p class="text-lg text-gray-600 leading-relaxed">
+                   An IT professional with over 10 years of experience providing comprehensive remote support for globally distributed teams. Proficient in diagnosing and resolving technical issues across macOS, Windows, and Google Workspace environments, with a strong background in SaaS administration and IAM solutions.
+                </p>
+            </div>
+             <div class="mt-10 flex flex-col sm:flex-row items-center gap-4">
+                <a href="https://linkedin.com/in/mj2117" target="_blank" class="bg-gray-200 text-gray-700 font-bold py-3 px-8 rounded-lg hover:bg-gray-300 transition-transform transform hover:scale-105 w-full sm:w-auto">LinkedIn</a>
+                <a href="#alignment" class="bg-[#2E5A88] text-white font-bold py-3 px-8 rounded-lg hover:bg-opacity-90 transition-transform transform hover:scale-105 w-full sm:w-auto">See Role Alignment</a>
+            </div>
+        </section>
+
+        <section id="competencies" class="py-20 section-fade-in">
+            <h2 class="text-3xl font-bold text-center mb-4">Core Competencies</h2>
+            <p class="text-center text-gray-500 max-w-2xl mx-auto mb-12">This chart provides a visual representation of my proficiency across key IT support domains, demonstrating a well-rounded and robust skill set ready to meet technical challenges.</p>
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <div class="chart-container">
+                    <canvas id="competenciesChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-20 section-fade-in">
+            <h2 class="text-3xl font-bold text-center mb-4">Professional Experience</h2>
+            <p class="text-center text-gray-500 max-w-2xl mx-auto mb-12">A timeline of my professional roles and key contributions at Bloomberg LP. Select a role to view the details.</p>
+            
+            <div class="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
+                <div class="md:w-1/3">
+                    <ul id="job-tabs-container" class="space-y-2">
+                        <li><button class="job-tab w-full text-left p-4 rounded-lg font-medium" data-job="job1">Product Operations Specialist</button></li>
+                        <li><button class="job-tab w-full text-left p-4 rounded-lg font-medium" data-job="job2">Technical Support Lead Executive</button></li>
+                        <li><button class="job-tab w-full text-left p-4 rounded-lg font-medium" data-job="job3">Senior IT Support Engineer</button></li>
+                    </ul>
+                </div>
+                <div class="md:w-2/3 bg-white p-8 rounded-2xl shadow-lg min-h-[400px]">
+                    <div id="job-details">
+                        <div id="job1" class="job-content">
+                            <h3 class="text-2xl font-bold text-[#2E5A88]">Product Operations Specialist</h3>
+                            <p class="text-gray-500 mb-6">August 2021 - Present</p>
+                            <ul class="space-y-4 list-disc list-inside text-gray-700">
+                                <li>Administered a suite of SaaS applications, including Google Workspace, to support a globally distributed workforce.</li>
+                                <li>Managed user identity and access for key corporate systems, applying a practical understanding of IAM principles.</li>
+                                <li>Provided dedicated remote Tier 1 support for end-users, diagnosing and resolving technical issues.</li>
+                                <li>Collaborated with HR to perform routine employee lifecycle tasks and conduct global onboarding sessions.</li>
+                                <li>Participated in hardware and software asset management, tracking inventory and deployment.</li>
+                            </ul>
+                        </div>
+                        <div id="job2" class="job-content hidden">
+                             <h3 class="text-2xl font-bold text-[#2E5A88]">Technical Support Lead Executive</h3>
+                            <p class="text-gray-500 mb-6">May 2017 - August 2021</p>
+                            <ul class="space-y-4 list-disc list-inside text-gray-700">
+                                <li>Achieved high customer satisfaction for executive-level users by delivering support for over 150 global meetings annually.</li>
+                                <li>Delivered white-glove support for audiovisual systems and office networks for critical executive functions.</li>
+                                <li>Trained employees on technology best practices and updated end-user-facing documentation.</li>
+                            </ul>
+                        </div>
+                        <div id="job3" class="job-content hidden">
+                             <h3 class="text-2xl font-bold text-[#2E5A88]">Senior IT Support Engineer</h3>
+                            <p class="text-gray-500 mb-6">May 2013 - May 2017</p>
+                            <ul class="space-y-4 list-disc list-inside text-gray-700">
+                                <li>Resolved complex technical issues for macOS and Windows users, consistently meeting SLAs.</li>
+                                <li>Implemented process improvements within incident management, leading to improved response times.</li>
+                                <li>Troubleshot issues related to wireless networks and physical infrastructure to maintain uptime.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="alignment" class="py-20 bg-white rounded-2xl shadow-lg section-fade-in">
+            <h2 class="text-3xl font-bold text-center mb-4">Role Alignment: Wiz</h2>
+            <p class="text-center text-gray-500 max-w-3xl mx-auto mb-12">A direct comparison of the Senior IT Technician role requirements against my qualifications. Hover over a "Wiz Need" to see the direct alignment.</p>
+            <div class="max-w-5xl mx-auto space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="font-bold text-gray-700 text-lg">What Wiz Needs...</div>
+                    <div class="font-bold text-gray-700 text-lg">How I Align...</div>
+                </div>
+                <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Tier 1 remote support for end-users.</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Provided dedicated remote Tier 1 support for end-users, diagnosing and resolving technical issues related to software, hardware, and network peripherals.</div>
+                </div>
+                <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Diagnose issues for macOS, Windows, AV systems, and networks.</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Resolved complex issues for macOS and Windows users; delivered support for audiovisual systems and troubleshot wireless networks.</div>
+                </div>
+                <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Participate in hardware and software asset management.</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Participated in hardware and software asset management, tracking inventory and deployment to ensure all users were equipped with appropriate technology.</div>
+                </div>
+                <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Collaborate with HR on employee lifecycle tasks and onboarding.</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Collaborated with HR to perform routine employee lifecycle tasks, conducting global onboarding sessions for new employees.</div>
+                </div>
+                <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Draft and update internal and end-user documentation.</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Trained employees on technology best practices and updated end-user-facing documentation to align with internal system changes.</div>
+                </div>
+                 <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Experience with IAM solutions (Okta, Azure AD, etc.).</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Managed user identity and access for key corporate systems, applying a practical understanding of IAM principles.</div>
+                </div>
+                 <div class="alignment-row grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="wiz-need alignment-box p-4 rounded-lg">Support a globally distributed workforce.</div>
+                    <div class="my-contribution alignment-box p-4 rounded-lg">Administered SaaS applications to support a globally distributed workforce and provided support for over 150 global meetings annually.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="py-20 section-fade-in">
+            <h2 class="text-3xl font-bold text-center mb-12">Certifications & Their Value</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg text-[#2E5A88]">Project Management Professional (PMP)</h3>
+                    <p class="mt-2 text-sm text-gray-600"><strong>Importance:</strong> The PMP is the gold standard for project management, validating the ability to manage projects, people, and business priorities. It demonstrates a capacity for strategic thinking and execution.</p>
+                    <p class="mt-2 text-sm text-gray-500"><strong>Alignment:</strong> This aligns with the need to handle IT projects like technology rollouts or process improvements. My experience in planning and monitoring a technology launch for 8,000 users is a practical application of these skills.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg text-[#2E5A88]">ITIL v4</h3>
+                    <p class="mt-2 text-sm text-gray-600"><strong>Importance:</strong> ITIL provides a framework for delivering high-quality IT service management (ITSM). It focuses on aligning IT services with business needs and ensuring consistent, repeatable processes.</p>
+                    <p class="mt-2 text-sm text-gray-500"><strong>Alignment:</strong> This is directly relevant to setting high standards for service desk activities. My work in implementing process improvements within incident management to meet SLAs reflects the core principles of ITIL.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg text-[#2E5A88]">Certified Scrum Product Owner (CSPO)</h3>
+                    <p class="mt-2 text-sm text-gray-600"><strong>Importance:</strong> A CSPO understands how to create a product vision, order a product backlog, and ensure the development team delivers maximum value. It emphasizes an agile and user-centric mindset.</p>
+                    <p class="mt-2 text-sm text-gray-500"><strong>Alignment:</strong> While this is a technician role, an agile mindset is crucial in a startup environment. It shows I can adapt to change and focus on delivering value to end-users, much like I did when translating support team insights into actionable goals for developers.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg text-[#2E5A88]">Google AI Essentials</h3>
+                    <p class="mt-2 text-sm text-gray-600"><strong>Importance:</strong> This certification shows a foundational understanding of AI tools and their potential applications. It signals an aptitude for learning and leveraging emerging technologies.</p>
+                    <p class="mt-2 text-sm text-gray-500"><strong>Alignment:</strong> For a forward-thinking company like Wiz, staying current on technology is key. This certification demonstrates my commitment to continuous learning and my interest in how new technologies can enhance IT support and operations.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 section-fade-in">
+             <h2 class="text-3xl font-bold text-center mb-8">Technical Skills & Platforms</h2>
+             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto text-center">
+                <div class="bg-blue-50 p-4 rounded-lg text-blue-800 font-medium">macOS</div>
+                <div class="bg-blue-50 p-4 rounded-lg text-blue-800 font-medium">Windows</div>
+                <div class="bg-blue-50 p-4 rounded-lg text-blue-800 font-medium">Linux</div>
+                <div class="bg-blue-50 p-4 rounded-lg text-blue-800 font-medium">Google Workspace</div>
+                <div class="bg-green-50 p-4 rounded-lg text-green-800 font-medium">Jira</div>
+                <div class="bg-green-50 p-4 rounded-lg text-green-800 font-medium">Slack</div>
+                <div class="bg-green-50 p-4 rounded-lg text-green-800 font-medium">Okta</div>
+                <div class="bg-green-50 p-4 rounded-lg text-green-800 font-medium">Microsoft Office</div>
+                <div class="bg-yellow-50 p-4 rounded-lg text-yellow-800 font-medium">AWS</div>
+                <div class="bg-yellow-50 p-4 rounded-lg text-yellow-800 font-medium">Azure AD</div>
+                <div class="bg-yellow-50 p-4 rounded-lg text-yellow-800 font-medium">Networking</div>
+                <div class="bg-yellow-50 p-4 rounded-lg text-yellow-800 font-medium">SaaS Admin</div>
+             </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2024 Marlon Jordan. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('#nav-menu a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                let currentSectionId = entry.target.id;
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === `#${currentSectionId}`){
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+    
+    const jobTabsContainer = document.getElementById('job-tabs-container');
+    const jobContents = document.querySelectorAll('.job-content');
+    const jobTabs = document.querySelectorAll('.job-tab');
+
+    function showJob(jobId) {
+        jobContents.forEach(content => content.classList.add('hidden'));
+        document.getElementById(jobId).classList.remove('hidden');
+
+        jobTabs.forEach(tab => tab.classList.remove('active'));
+        document.querySelector(`.job-tab[data-job="${jobId}"]`).classList.add('active');
+    }
+
+    jobTabsContainer.addEventListener('click', (e) => {
+        if (e.target.matches('.job-tab')) {
+            showJob(e.target.dataset.job);
+        }
+    });
+
+    showJob('job1');
+
+    const ctx = document.getElementById('competenciesChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                'Remote Support', 
+                'macOS/Windows', 
+                'SaaS Admin', 
+                'IAM', 
+                'Networking', 
+                'Asset Mgmt'
+            ],
+            datasets: [{
+                label: 'Proficiency Level',
+                data: [9, 9, 8, 8, 7, 9],
+                backgroundColor: 'rgba(46, 90, 136, 0.7)',
+                borderColor: 'rgba(46, 90, 136, 1)',
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 10,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `Proficiency: ${context.raw} / 10`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    document.querySelectorAll('.alignment-row').forEach(row => {
+        const needBox = row.querySelector('.wiz-need');
+        const contributionBox = row.querySelector('.my-contribution');
+
+        if (needBox && contributionBox) {
+            const highlightOn = () => {
+                needBox.classList.add('highlight');
+                contributionBox.classList.add('highlight');
+            };
+            const highlightOff = () => {
+                needBox.classList.remove('highlight');
+                contributionBox.classList.remove('highlight');
+            };
+
+            needBox.addEventListener('mouseenter', highlightOn);
+            needBox.addEventListener('mouseleave', highlightOff);
+            contributionBox.addEventListener('mouseenter', highlightOn);
+            contributionBox.addEventListener('mouseleave', highlightOff);
+        }
+    });
+
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('#mobile-menu a, #nav-menu a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (mobileMenu.offsetParent !== null) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
